@@ -1,0 +1,26 @@
+import os
+import flet as ft
+def main(page:ft.Page):
+    def criar_pasta(e):
+        nome_pasta=text_entrada.value
+        os.mkdir(nome_pasta)
+        resultado.value=f"pasta criada com sucesso{nome_pasta}"
+        resultado.color="Green"
+        page.update()
+    
+    def remoçao_pasta(e):
+        nome_pasta=text_entrada.value
+        os.rmdir(nome_pasta)
+        resultado.value=f"pasta apagada com sucesso{nome_pasta}"
+        resultado.color="Red"
+        page.update()
+
+    botao_criar_pasta=ft.ElevatedButton("criar pasta",on_click=criar_pasta,bgcolor="Green",color="white",width=300)
+    text_entrada=ft.TextField(label="escreva alguma coisa.")
+    botao_remover_pasta=ft.ElevatedButton("removerr pasta",on_click=remoçao_pasta,color="Green",bgcolor="white",width=300)
+    resultado=ft.Text("",size=25,color="Green")
+    page.add(ft.Row([text_entrada],alignment="center"),
+            ft.Row([botao_criar_pasta],alignment="center"),
+            ft.Row([botao_remover_pasta],alignment="center"),
+            ft.Row([resultado],alignment="center"))
+ft.app(target=main)
