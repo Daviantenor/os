@@ -1,0 +1,43 @@
+import os
+import flet as ft
+def main(page:ft.Page):
+    page.title=("Entrada de usuário")
+    page.theme_mode="Dark"
+    def criar_pasta(e):
+        global texto_pasta
+        texto_pasta = texto_entrada.value
+        os.mkdir(texto_pasta)
+        informativo.value=f"pasta criada com sucesso"
+        
+        page.update()
+    
+    def criar_arquivo(e):   
+
+        texto = texto_entrada.value
+        try:
+            open(f"{texto_pasta}/{texto}","w").close()
+            informativo.value=f"arquivo removido:'{texto}'"
+        except Exception as erro:
+            informativo.value=f"erro:{erro}"  
+
+    
+    def remover_arquivo(e):   
+        texto = texto_entrada.value
+    if os.path.exists("gu.txt"):
+        os.remove("gu.txt")
+        print("Arquivo apagado")
+    else:
+        print("Arquivo não encontrado")
+
+    texto_entrada=ft.TextField(label="Crie ou remova uma pasta.")
+    botao_criar_pasta=ft.ElevatedButton("criar pasta",on_click=criar_pasta,bgcolor="Green",color="white",width=300)
+    botao_remover_arquivo=ft.ElevatedButton("remover pasta",on_click=remover_arquivo,bgcolor="red",color="white",width=300)
+    botao_criar_arquivo=ft.ElevatedButton("criar arquivo",on_click=criar_arquivo,bgcolor="dark",color="white",width=300)
+   
+    informativo=ft.Text("",size=25,color="Green")
+    page.add(ft.Row([texto_entrada]),
+            ft.Row([botao_criar_pasta]),
+            ft.Row([botao_remover_arquivo]),
+            ft.Row([botao_criar_arquivo]),
+            ft.Row([informativo]))
+ft.app(target=main)
